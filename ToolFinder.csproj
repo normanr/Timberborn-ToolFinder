@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1AAE1595-70F8-4E5C-BA3E-EF2AE00E8348}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Mods.ToolFinder</RootNamespace>
+    <AssemblyName>ToolFinder</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>embedded</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>Timberborn\Timberborn_Data\Managed\System.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Bindito.Core">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Bindito.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>Timberborn\Timberborn_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>Timberborn\Timberborn_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.BaseComponentSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BaseComponentSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.BlockObjectTools">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BlockObjectTools.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.BlockSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BlockSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.CoreUI">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.CoreUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.CursorToolSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.CursorToolSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.Debugging">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Debugging.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.InputSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.ModManagerScene">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.ModManagerScene.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.Planting">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Planting.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.PlantingUI">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.PlantingUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.SingletonSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.SingletonSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.ToolSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.ToolSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Harmony">
+      <HintPath>Harmony/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\ModConfigurator.cs" />
+    <Compile Include="Scripts\ModStarter.cs" />
+    <Compile Include="Scripts\ToolButtonPatcher.cs" />
+    <Compile Include="Scripts\ToolButtonFilter.cs" />
+    <Compile Include="Scripts\ToolGroupManagerPatcher.cs" />
+    <Compile Include="Scripts\CursorToolPatcher.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+    <Folder Include="Specifications\" />
+    <Folder Include="Specifications\KeyBindings\" />
+    <Folder Include="Localizations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Specifications\KeyBindings\KeyBindingSpecification.FilterTools.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localizations\enUS.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
