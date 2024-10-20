@@ -69,8 +69,16 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Debugging.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Timberborn.EntitySystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.EntitySystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Timberborn.InputSystem">
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.Localization">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Localization.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Timberborn.ModManagerScene">

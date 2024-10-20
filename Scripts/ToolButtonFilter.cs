@@ -1,10 +1,13 @@
-﻿using Timberborn.BlockObjectTools;
+﻿using System.Globalization;
+using Timberborn.BlockObjectTools;
+using Timberborn.Debugging;
+using Timberborn.CoreUI;
+using Timberborn.EntitySystem;
 using Timberborn.InputSystem;
+using Timberborn.Localization;
 using Timberborn.PlantingUI;
 using Timberborn.SingletonSystem;
 using Timberborn.ToolSystem;
-using Timberborn.Debugging;
-using Timberborn.CoreUI;
 
 namespace Mods.ToolFinder
 {
@@ -16,14 +19,16 @@ namespace Mods.ToolFinder
     private static readonly string FilterToolsLocKey = "FilterTools.Filter";
 
     private readonly DevModeManager _devModeManager;
+    private readonly ILoc _loc;
     private readonly InputBoxShower _inputBoxShower;
     private readonly InputService _inputService;
 
     private string filterText;
 
-    public ToolButtonFilter(DevModeManager devModeManager, InputBoxShower inputBoxShower, InputService inputService)
+    public ToolButtonFilter(DevModeManager devModeManager, ILoc loc, InputBoxShower inputBoxShower, InputService inputService)
     {
       _devModeManager = devModeManager;
+      _loc = loc;
       _inputBoxShower = inputBoxShower;
       _inputService = inputService;
     }
@@ -69,7 +74,12 @@ namespace Mods.ToolFinder
 
     bool NameMatches(string name)
     {
-      return name.ToLower().Contains(filterText);
+      return CultureInfo.InstalledUICulture.CompareInfo.IndexOf(name, filterText, CompareOptions.IgnoreCase) >= 0;
+    }
+
+    bool LabeledEntitySpecMatches(LabeledEntitySpec labeledEntitySpec)
+    {
+      return NameMatches(_loc.T(labeledEntitySpec.DisplayNameLocKey));
     }
 
     internal bool ToolMatches(Tool tool)
@@ -80,11 +90,16 @@ namespace Mods.ToolFinder
       }
       if (tool is PlantingTool plantingTool)
       {
-        return NameMatches(plantingTool.Plantable.PrefabName);
+        return LabeledEntitySpecMatches(plantingTool.Plantable.GetComponentFast<LabeledEntitySpec>());
       }
       if (tool is BlockObjectTool blockObjectTool)
       {
-        return NameMatches(blockObjectTool.Prefab.name);
+        return LabeledEntitySpecMatches(blockObjectTool.Prefab.GetComponentFast<LabeledEntitySpec>());
+      }
+      var description = tool.Description();
+      if (!string.IsNullOrEmpty(description?.Title))
+      {
+        return NameMatches(description.Title);
       }
       return true;
     }
