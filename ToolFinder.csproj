@@ -57,6 +57,10 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BlockSystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Timberborn.Common">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Timberborn.CoreUI">
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.CoreUI.dll</HintPath>
       <Private>false</Private>
@@ -75,6 +79,10 @@
     </Reference>
     <Reference Include="Timberborn.InputSystem">
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.Goods">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Goods.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Timberborn.Localization">
@@ -108,12 +116,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\ComponentExtensions.cs" />
+    <Compile Include="Scripts\CursorToolPatcher.cs" />
     <Compile Include="Scripts\ModConfigurator.cs" />
     <Compile Include="Scripts\ModStarter.cs" />
-    <Compile Include="Scripts\ToolButtonPatcher.cs" />
     <Compile Include="Scripts\ToolButtonFilter.cs" />
+    <Compile Include="Scripts\ToolButtonPatcher.cs" />
     <Compile Include="Scripts\ToolGroupManagerPatcher.cs" />
-    <Compile Include="Scripts\CursorToolPatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json">

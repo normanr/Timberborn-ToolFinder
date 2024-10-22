@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using HarmonyLib;
 using Timberborn.BlockObjectTools;
 using Timberborn.Debugging;
 using Timberborn.CoreUI;
@@ -8,6 +10,9 @@ using Timberborn.Localization;
 using Timberborn.PlantingUI;
 using Timberborn.SingletonSystem;
 using Timberborn.ToolSystem;
+using Timberborn.Common;
+using Timberborn.Goods;
+using Timberborn.BaseComponentSystem;
 
 namespace Mods.ToolFinder
 {
@@ -22,15 +27,17 @@ namespace Mods.ToolFinder
     private readonly ILoc _loc;
     private readonly InputBoxShower _inputBoxShower;
     private readonly InputService _inputService;
+    private readonly RecipeSpecificationService _recipeSpecificationService;
 
     private string filterText;
 
-    public ToolButtonFilter(DevModeManager devModeManager, ILoc loc, InputBoxShower inputBoxShower, InputService inputService)
+    public ToolButtonFilter(DevModeManager devModeManager, ILoc loc, InputBoxShower inputBoxShower, InputService inputService, RecipeSpecificationService recipeSpecificationService)
     {
       _devModeManager = devModeManager;
       _loc = loc;
       _inputBoxShower = inputBoxShower;
       _inputService = inputService;
+      _recipeSpecificationService = recipeSpecificationService;
     }
 
     public void Load()
@@ -77,9 +84,29 @@ namespace Mods.ToolFinder
       return CultureInfo.InstalledUICulture.CompareInfo.IndexOf(name, filterText, CompareOptions.IgnoreCase) >= 0;
     }
 
-    bool LabeledEntitySpecMatches(LabeledEntitySpec labeledEntitySpec)
+    bool LabeledEntitySpecMatches(BaseComponent baseComponent)
     {
+      var labeledEntitySpec = baseComponent.GetComponentFast<LabeledEntitySpec>();
       return NameMatches(_loc.T(labeledEntitySpec.DisplayNameLocKey));
+    }
+
+    bool ManufactorySpecMatches(BaseComponent baseComponent)
+    {
+      var manufactorySpec = baseComponent.GetComponentFast_ManufactorySpec();
+      if (manufactorySpec == null)
+      {
+        return false;
+      }
+      var productionRecipeIds = Traverse.Create(manufactorySpec).Property("ProductionRecipeIds").GetValue<ReadOnlyList<string>>();
+      foreach (var recipeId in productionRecipeIds)
+      {
+        var recipe = _recipeSpecificationService.GetRecipe(recipeId);
+        if (NameMatches(_loc.T(recipe.DisplayLocKey)))
+        {
+          return true;
+        }
+      }
+      return false;
     }
 
     internal bool ToolMatches(Tool tool)
@@ -90,11 +117,21 @@ namespace Mods.ToolFinder
       }
       if (tool is PlantingTool plantingTool)
       {
-        return LabeledEntitySpecMatches(plantingTool.Plantable.GetComponentFast<LabeledEntitySpec>());
+        return LabeledEntitySpecMatches(plantingTool.Plantable);
       }
       if (tool is BlockObjectTool blockObjectTool)
       {
-        return LabeledEntitySpecMatches(blockObjectTool.Prefab.GetComponentFast<LabeledEntitySpec>());
+        try
+        {
+          if (LabeledEntitySpecMatches(blockObjectTool.Prefab))
+          {
+            return true;
+          }
+        }
+        catch (NullReferenceException) {
+          return true;  // avoid NullReferenceException during fast shutdown if filter is active
+        }
+        return ManufactorySpecMatches(blockObjectTool.Prefab);
       }
       var description = tool.Description();
       if (!string.IsNullOrEmpty(description?.Title))
