@@ -1,8 +1,8 @@
 {
   "Name": "Tool Finder",
-  "Version": "0.0.3",
+  "Version": "0.0.4",
   "Id": "ToolFinder",
-  "MinimumGameVersion": "0.6.8.4",
+  "MinimumGameVersion": "0.7.0.0",
   "Description": "Quick find that tool",
   "RequiredMods": [
     {

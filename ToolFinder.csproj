@@ -49,6 +49,10 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BaseComponentSystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Timberborn.BlueprintSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BlueprintSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Timberborn.BlockObjectTools">
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.BlockObjectTools.dll</HintPath>
       <Private>false</Private>
@@ -77,12 +81,16 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.EntitySystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Timberborn.Goods">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Goods.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Timberborn.InputSystem">
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.InputSystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="Timberborn.Goods">
-      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Goods.dll</HintPath>
+    <Reference Include="Timberborn.KeyBindingSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.KeyBindingSystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Timberborn.Localization">
@@ -109,6 +117,10 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.ToolSystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Timberborn.Workshops">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Workshops.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Harmony">
       <HintPath>Harmony/0Harmony.dll</HintPath>
       <Private>false</Private>
@@ -131,12 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
-    <Folder Include="Specifications\" />
-    <Folder Include="Specifications\KeyBindings\" />
+    <Folder Include="Blueprints\" />
+    <Folder Include="Blueprints\KeyBindings\" />
     <Folder Include="Localizations\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Specifications\KeyBindings\KeyBindingSpecification.FilterTools.json">
+    <Content Include="Blueprints\KeyBindings\KeyBinding.FilterTools.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Localizations\enUS.csv">

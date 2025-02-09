@@ -6,12 +6,13 @@ using Timberborn.Debugging;
 using Timberborn.CoreUI;
 using Timberborn.EntitySystem;
 using Timberborn.InputSystem;
+using Timberborn.KeyBindingSystem;
 using Timberborn.Localization;
 using Timberborn.PlantingUI;
 using Timberborn.SingletonSystem;
 using Timberborn.ToolSystem;
 using Timberborn.Common;
-using Timberborn.Goods;
+using Timberborn.Workshops;
 using Timberborn.BaseComponentSystem;
 
 namespace Mods.ToolFinder
@@ -27,17 +28,25 @@ namespace Mods.ToolFinder
     private readonly ILoc _loc;
     private readonly InputBoxShower _inputBoxShower;
     private readonly InputService _inputService;
-    private readonly RecipeSpecificationService _recipeSpecificationService;
+    private readonly KeyBindingRegistry _keyBindingRegistry;
+    private readonly RecipeSpecService _recipeSpecService;
 
     private string filterText;
 
-    public ToolButtonFilter(DevModeManager devModeManager, ILoc loc, InputBoxShower inputBoxShower, InputService inputService, RecipeSpecificationService recipeSpecificationService)
+    public ToolButtonFilter(
+      DevModeManager devModeManager,
+      ILoc loc,
+      InputBoxShower inputBoxShower,
+      InputService inputService,
+      KeyBindingRegistry keyBindingRegistry,
+      RecipeSpecService recipeSpecService)
     {
       _devModeManager = devModeManager;
       _loc = loc;
       _inputBoxShower = inputBoxShower;
       _inputService = inputService;
-      _recipeSpecificationService = recipeSpecificationService;
+      _keyBindingRegistry = keyBindingRegistry;
+      _recipeSpecService = recipeSpecService;
     }
 
     public void Load()
@@ -52,7 +61,7 @@ namespace Mods.ToolFinder
 
     internal bool ProcessInput()
     {
-      if (_inputService.IsKeyDown(FilterToolsKey))
+      if (_keyBindingRegistry.IsUpAfterShortHeld(FilterToolsKey))
       {
         _inputBoxShower.Create().SetLocalizedMessage(FilterToolsLocKey).SetConfirmButton(SetFilter)
                                 .Show();
@@ -100,7 +109,7 @@ namespace Mods.ToolFinder
       var productionRecipeIds = Traverse.Create(manufactorySpec).Property("ProductionRecipeIds").GetValue<ReadOnlyList<string>>();
       foreach (var recipeId in productionRecipeIds)
       {
-        var recipe = _recipeSpecificationService.GetRecipe(recipeId);
+        var recipe = _recipeSpecService.GetRecipe(recipeId);
         if (NameMatches(_loc.T(recipe.DisplayLocKey)))
         {
           return true;
@@ -117,7 +126,7 @@ namespace Mods.ToolFinder
       }
       if (tool is PlantingTool plantingTool)
       {
-        return LabeledEntitySpecMatches(plantingTool.Plantable);
+        return LabeledEntitySpecMatches(plantingTool.PlantableSpec);
       }
       if (tool is BlockObjectTool blockObjectTool)
       {
