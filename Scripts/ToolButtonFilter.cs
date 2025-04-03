@@ -66,7 +66,7 @@ namespace Mods.ToolFinder
         _inputBoxShower.Create().SetLocalizedMessage(FilterToolsLocKey).SetConfirmButton(SetFilter)
                                 .Show();
       }
-      if (_inputService.Cancel && filterText != null)
+      if (_inputService.Cancel && !string.IsNullOrEmpty(filterText))
       {
         SetFilter(null);
         return true;
