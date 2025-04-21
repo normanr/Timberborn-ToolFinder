@@ -101,7 +101,7 @@ namespace Mods.ToolFinder
 
     bool ManufactorySpecMatches(BaseComponent baseComponent)
     {
-      var manufactorySpec = baseComponent.GetComponentFast_ManufactorySpec();
+      var manufactorySpec = baseComponent.GetComponentFast<ManufactorySpec>();
       if (manufactorySpec == null)
       {
         return false;
