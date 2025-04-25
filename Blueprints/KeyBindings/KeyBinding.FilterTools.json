@@ -3,7 +3,7 @@
     "Id": "FilterTools",
     "GroupId": "UI",
     "LocKey": "KeyBinding.FilterTools",
-    "Order": 165,
+    "Order": 195,
     "AllowOtherModifiers": false,
     "DevModeOnly": false
   },
