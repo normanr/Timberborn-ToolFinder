@@ -24,7 +24,7 @@ namespace Mods.ToolFinder
     private static readonly string FilterToolsKey = "FilterTools";
     private static readonly string FilterToolsLocKey = "FilterTools.Filter";
 
-    private readonly DevModeManager _devModeManager;
+    private readonly EventBus _eventBus;
     private readonly ILoc _loc;
     private readonly InputBoxShower _inputBoxShower;
     private readonly InputService _inputService;
@@ -34,14 +34,14 @@ namespace Mods.ToolFinder
     private string filterText;
 
     public ToolButtonFilter(
-      DevModeManager devModeManager,
+      EventBus eventBus,
       ILoc loc,
       InputBoxShower inputBoxShower,
       InputService inputService,
       KeyBindingRegistry keyBindingRegistry,
       RecipeSpecService recipeSpecService)
     {
-      _devModeManager = devModeManager;
+      _eventBus = eventBus;
       _loc = loc;
       _inputBoxShower = inputBoxShower;
       _inputService = inputService;
@@ -77,15 +77,8 @@ namespace Mods.ToolFinder
     internal void SetFilter(string newFilterText)
     {
       filterText = newFilterText;
-      // TODO: Trigger OnDevModeToggledEvent directly to avoid GameAnalytics?
-      if (_devModeManager.Enabled)
-      {
-        _devModeManager.Enable();
-      }
-      else
-      {
-        _devModeManager.Disable();
-      }
+      // TODO: Invoke ToggleDisplayStyle for ToolGroupButton and ToolButton VisualElements directly?
+      _eventBus.Post(new DevModeToggledEvent(enabled: false));
     }
 
     bool NameMatches(string name)

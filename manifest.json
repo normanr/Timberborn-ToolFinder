@@ -1,6 +1,6 @@
 {
   "Name": "Tool Finder",
-  "Version": "0.0.7",
+  "Version": "0.0.8",
   "Id": "ToolFinder",
   "MinimumGameVersion": "0.7.3.0",
   "Description": "Quick find that tool",
