@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using HarmonyLib;
 using Timberborn.BlockObjectTools;
+using Timberborn.BlueprintSystem;
 using Timberborn.Debugging;
 using Timberborn.CoreUI;
 using Timberborn.EntitySystem;
@@ -11,9 +11,8 @@ using Timberborn.Localization;
 using Timberborn.PlantingUI;
 using Timberborn.SingletonSystem;
 using Timberborn.ToolSystem;
-using Timberborn.Common;
+using Timberborn.ToolSystemUI;
 using Timberborn.Workshops;
-using Timberborn.BaseComponentSystem;
 
 namespace Mods.ToolFinder
 {
@@ -86,21 +85,20 @@ namespace Mods.ToolFinder
       return CultureInfo.InstalledUICulture.CompareInfo.IndexOf(name, filterText, CompareOptions.IgnoreCase) >= 0;
     }
 
-    bool LabeledEntitySpecMatches(BaseComponent baseComponent)
+    bool LabeledEntitySpecMatches(ComponentSpec baseComponent)
     {
-      var labeledEntitySpec = baseComponent.GetComponentFast<LabeledEntitySpec>();
+      var labeledEntitySpec = baseComponent.GetSpec<LabeledEntitySpec>();
       return NameMatches(_loc.T(labeledEntitySpec.DisplayNameLocKey));
     }
 
-    bool ManufactorySpecMatches(BaseComponent baseComponent)
+    bool ManufactorySpecMatches(ComponentSpec baseComponent)
     {
-      var manufactorySpec = baseComponent.GetComponentFast<ManufactorySpec>();
+      var manufactorySpec = baseComponent.GetSpec<ManufactorySpec>();
       if (manufactorySpec == null)
       {
         return false;
       }
-      var productionRecipeIds = Traverse.Create(manufactorySpec).Property("ProductionRecipeIds").GetValue<ReadOnlyList<string>>();
-      foreach (var recipeId in productionRecipeIds)
+      foreach (var recipeId in manufactorySpec.ProductionRecipeIds)
       {
         var recipe = _recipeSpecService.GetRecipe(recipeId);
         if (NameMatches(_loc.T(recipe.DisplayLocKey)))
@@ -111,7 +109,7 @@ namespace Mods.ToolFinder
       return false;
     }
 
-    internal bool ToolMatches(Tool tool)
+    internal bool ToolMatches(ITool tool)
     {
       if (string.IsNullOrEmpty(filterText))
       {
@@ -125,7 +123,7 @@ namespace Mods.ToolFinder
       {
         try
         {
-          if (LabeledEntitySpecMatches(blockObjectTool.Prefab))
+          if (LabeledEntitySpecMatches(blockObjectTool.Template))
           {
             return true;
           }
@@ -133,9 +131,9 @@ namespace Mods.ToolFinder
         catch (NullReferenceException) {
           return true;  // avoid NullReferenceException during fast shutdown if filter is active
         }
-        return ManufactorySpecMatches(blockObjectTool.Prefab);
+        return ManufactorySpecMatches(blockObjectTool.Template);
       }
-      var description = tool.Description();
+      var description = (tool as IToolDescriptor)?.DescribeTool();
       if (!string.IsNullOrEmpty(description?.Title))
       {
         return NameMatches(description.Title);

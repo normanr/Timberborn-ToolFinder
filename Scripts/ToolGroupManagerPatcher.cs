@@ -3,7 +3,7 @@ using Timberborn.ToolSystem;
 
 namespace Mods.ToolFinder
 {
-  [HarmonyPatch(typeof(ToolGroupManager), nameof(ToolGroupManager.CloseToolGroup))]
+  [HarmonyPatch(typeof(ToolGroupService), nameof(ToolGroupService.ExitToolGroup))]
   static class ToolGroupManagerPatcher
   {
     static void Prefix()

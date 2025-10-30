@@ -33,6 +33,10 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\System.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>Timberborn\Timberborn_Data\Managed\System.Collections.Immutable.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Bindito.Core">
       <HintPath>Timberborn\Timberborn_Data\Managed\Bindito.Core.dll</HintPath>
       <Private>false</Private>
@@ -117,6 +121,14 @@
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.ToolSystem.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Timberborn.ToolSystemUI">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.ToolSystemUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Timberborn.ToolButtonSystem">
+      <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.ToolButtonSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Timberborn.Workshops">
       <HintPath>Timberborn\Timberborn_Data\Managed\Timberborn.Workshops.dll</HintPath>
       <Private>false</Private>
@@ -147,7 +159,7 @@
     <Folder Include="Localizations\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Blueprints\KeyBindings\KeyBinding.FilterTools.json">
+    <Content Include="Blueprints\KeyBindings\KeyBinding.FilterTools.blueprint.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Localizations\enUS.csv">

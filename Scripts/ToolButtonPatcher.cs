@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using Timberborn.ToolSystem;
+using Timberborn.ToolButtonSystem;
 
 namespace Mods.ToolFinder
 {
